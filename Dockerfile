@@ -2,10 +2,19 @@ FROM debian:stable
 
 MAINTAINER Piotr Król <piotr.krol@3mdeb.com>
 
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN \
+	apt-get update && \
+	apt-get install --assume-yes apt-utils && \
+	apt-get -y install apt-transport-https ca-certificates 
+
+ADD sources.list /etc/apt/
+
 RUN \
 	useradd -p locked -m xen && \
-	apt-get -qq update && \
-	apt-get -qqy install \
+	apt-get update && \
+	apt-get -y install \
 		bcc \
 		bin86 \
 		bison \
